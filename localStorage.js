@@ -2,10 +2,16 @@
 
 
 function loadFromLocalStorage() {
-    var jsonString = localStorage.getItem('cards');
-    var buf = JSON.parse(jsonString);
-    var len = Object.keys(buf.cards).length;
     cards=[];
+    var jsonString = localStorage.getItem('cards');
+    if ( jsonString === null){
+        return;
+    }
+    var buf = JSON.parse(jsonString);
+    if ( typeof buf.cards === 'undefined'){
+        return;
+    }
+    var len = Object.keys(buf.cards).length;
     for (i=0;i<len;i++){
         cards.push(new Card(buf.cards[i].name,buf.cards[i].transactions))
     }

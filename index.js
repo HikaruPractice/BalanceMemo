@@ -1,4 +1,4 @@
-var cards;
+var cards=[];
 var selected;
 var card;
 var menu=true;
@@ -31,6 +31,24 @@ window.onload = () => {
     document.getElementsByName('month')[0].value = month;
     document.getElementsByName('day')[0].value = day;
 
+}
+
+function createCard(){
+    var name=document.getElementsByName('newCard')[0].value;
+    var initialBalance = document.getElementsByName('newCardBalance')[0].value;
+    if (initialBalance>0){
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        var initialTransactions = [
+            [year,month,day,Number(initialBalance),'初期残高']
+        ]
+        cards.push(new Card(name,initialTransactions));
+    }else{
+        cards.push(new Card(name));
+    }selected=name;
+    saveToLocalStrorage();
 }
 
 function selectCard(name){
