@@ -1,0 +1,14 @@
+body{
+    touch-action: manipulation;
+}
+
+.wrapper{
+    width: 100%;
+}
+
+@media screen and (min-width:428px) {
+    /*　画面サイズが428pxからはここを読み込む　*/
+    .wrapper{
+        width: 428px;
+    }
+}

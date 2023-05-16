@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>aaa</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="responsive.css">
+
+    <!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+    <script src="transaction.js"></script>
+    <script src="card.js"></script>
+    <script src="cards.js"></script>
+    <script src="localStorage.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input id="menuTab" type="checkbox" name="mode" checked>
+        <label class="tab" for="menuTab">口座選択</label>
+        <div id="menu">
+            <table class="accountList">
+                <caption>口座選択</caption>
+                <tr>
+                    <th class="colDate">
+                        口座名
+                    </th>
+                    <th class="colAmount">
+                        残高
+                    </th>
+                    <th class="colSummary">
+                        メモ
+                    </th>
+                </tr>
+                <script>
+                    var buf="";
+                    var len=cards.length;
+                    for (i=0;i<len;i++){   
+                    buf+=`
+                    <tr>
+                        <td>
+                            <span class="cardName" onClick="selectCard('${cards[i].getName()}')">${cards[i].getName()}</span>
+                        </td>
+                        <td>
+                            ${cards[i].getBalance()}
+                        </td>
+                        <td>
+                        </td>`
+                    }
+                    document.getElementsByClassName('accountList')[0].innerHTML+=buf;
+                </script>
+            </table>
+            <!--新規追加機能付けたい-->
+        </div>
+        <div id="content" >
+            <div id="balance">
+                <script>
+                    document.getElementById('balance').innerHTML = `
+                <p>${card.getName()}</p>
+                <p class="balanceTitle">残高</p>
+                <p class="balanceAmount">${card.getBalanceText()}</p>`
+                </script>
+            </div>
+            <div id="input">
+                <input name="year" class="date" type="number" step="1">年
+                <input name="month" class="date" type="number" step="1" max="12" min="1">月
+                <input name="day" class="date" type="number" step="1" max="31" min="1">日<br>
+                <input name="amount" style="width: calc(100% - 30px);">円<br>
+                <label for="">摘要:<input name="summary" type="text" style="width: calc(100% - 60px);"></label>
+                <button onclick="addTransaction()">追加</button>
+            </div>
+            <div id="statement">
+                <table class="transaction">
+                    <caption>決済履歴</caption>
+                    <tr>
+                        <th class="colDate">
+                            日付
+                        </th>
+                        <th class="colAmount">
+                            金額
+                        </th>
+                        <th class="colSummary">
+                            摘要
+                        </th>
+                        <th class="remove">
+                            削除
+                        </th>
+                    </tr>
+                    <script>
+                        var _table = document.getElementsByClassName('transaction')[0]
+                        var buf = '';
+                        var len = card.getTransactions().length;
+                        for (var i = len - 1; 0 <= i; i--) {
+                            buf += `
+                    <tr>
+                        <td>
+                            ${card.getTransaction(i).getDate()}
+                        </td>
+                        <td>
+                            ${card.getTransaction(i).getAmountText()}
+                        </td>
+                        <td>
+                            ${card.getTransaction(i).getSummary()}
+                        </td>
+                        <td>
+                            <button class="removeButton" onClick="removeTransaction(${i})">削除</button>
+                    </tr>`
+                        }
+                        _table.innerHTML += buf;
+                    </script>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

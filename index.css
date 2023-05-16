@@ -1,0 +1,75 @@
+#menu,
+#menuTab:checked ~ #content{
+    display: none;
+}
+#menuTab:checked ~ #menu,
+#content{
+    display: block;
+}
+
+.cardName{
+    color: blue;
+    text-decoration:underline;
+}
+
+
+#balance {
+    width: fit-content;
+    min-width: 100px;
+    text-align: center;
+    margin: 0 auto;
+    border: solid 1px greenyellow;
+    background-color: palegreen;
+    border-radius:10px;
+    padding: 10px;   
+}
+#balance p{
+    margin: 0px;
+}
+
+#balance .balanceTitle{
+    display: inline-block;
+    width: 100%;
+    border: solid 1px white;
+    background-color: greenyellow;
+    border-radius:50vmin;
+    font-size: 15px;
+}
+
+.date{
+    width: 20%;
+    text-align: right;
+}
+
+#balance .balanceAmount{
+    font-size: 20px;
+    border-bottom: double; 
+}
+
+table{
+    width: 100%;
+    border-collapse:collapse;
+    text-align: right;
+}
+tr,td,th{
+    border:solid  1px black;
+    font-size: 15px;
+}
+th{
+    text-align: center;
+}
+.colDate{
+    width: 80px;
+}
+.colAmount{
+    width: 80px;
+}
+.remove{
+    width: 40px;
+}
+.removeButton{
+    width:40px;
+    font-size: 15px;
+    text-align: center;
+    padding: 0;
+}
