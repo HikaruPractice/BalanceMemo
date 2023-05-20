@@ -24,5 +24,5 @@ function saveToLocalStrorage() {
     }
     var jsonString = JSON.stringify(data);
     localStorage.setItem('cards', jsonString);
-    location.reload();
+    table();
 }

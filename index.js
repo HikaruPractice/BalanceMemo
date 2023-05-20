@@ -3,8 +3,8 @@ var selected=-1;
 var card;
 var menu=true;
 {
+    console.log('ページが更新されました'+`${new Date().getMinutes()}分${new Date().getSeconds()}秒`)
     loadFromLocalStorage();
-    setSelectedCard();
 }
 
 function setSelectedCard(){
@@ -16,6 +16,8 @@ function setSelectedCard(){
         menu=false;
     }
 }
+
+
 
 // function setSelectedCard(){
 //     var len= cards.length;
@@ -31,18 +33,10 @@ function setSelectedCard(){
 // }
 
 window.onload = () => {
-    document.getElementById('menuTab').checked = menu;
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1;
-    var day = today.getDate();
-    document.getElementsByName('newCardyear')[0].value = year;
-    document.getElementsByName('newCardmonth')[0].value = month;
-    document.getElementsByName('newCardday')[0].value = day;
-    document.getElementsByName('year')[0].value = year;
-    document.getElementsByName('month')[0].value = month;
-    document.getElementsByName('day')[0].value = day;
-
+    
+    table();
+    dateInputboxReset(document.getElementsByName('year')[0], document.getElementsByName('month')[0],document.getElementsByName('day')[0]);
+    dateInputboxReset(document.getElementsByName('newCardyear')[0], document.getElementsByName('newCardmonth')[0],document.getElementsByName('newCardday')[0]);
 }
 
 function createCard(){
@@ -99,7 +93,9 @@ function addTransaction() {
     }
     var summary = document.getElementsByName('summary')[0].value;
     card.addTransaction([year, month, day], amount, summary);
+    dateInputboxReset(document.getElementsByName('year')[0], document.getElementsByName('month')[0],document.getElementsByName('day')[0]);
     saveToLocalStrorage();
+
 }
 
 function editTransaction(index){
@@ -107,8 +103,13 @@ function editTransaction(index){
     var year=target.getElementsByClassName('year')[0].value;
     var month=target.getElementsByClassName('month')[0].value;
     var day=target.getElementsByClassName('day')[0].value;
-    var amount=target.getElementsByClassName('amount')[0].value;
+    var amount=0;
     var summary=target.getElementsByClassName('summary')[0].value;
+    
+    var amountAbs=target.getElementsByClassName('amount')[0].value;
+    var charge=target.getElementsByClassName('charge')[0].checked;
+    amount=(charge?1:-1)*amountAbs;
+
     card.editTransaction([year,month,day],amount,summary,index);
     saveToLocalStrorage();
 }
@@ -119,13 +120,13 @@ function removeTransaction(index) {
 }
 
 function editMode(n){
-    var len = card.getTransactions().length;
     resetEditMode()
     document.getElementById(`ts${n}`).style.display="none";
     document.getElementById(`ts${n}_edit`).style.display="table-row";
 }
 
 function resetEditMode(){
+    var len = card.getTransactions().length;
     for(i=0;i<len;i++){
         document.getElementById(`ts${i}`).style.display="table-row";
         document.getElementById(`ts${i}_edit`).style.display="none";
@@ -188,4 +189,11 @@ function checkDateFormat(year,month,day){
         return false;
     }
     return true;
+}
+
+function dateInputboxReset(yearBox,monthBox,dayBox){
+    var now=new Date();
+    yearBox.value=now.getFullYear();
+    monthBox.value=now.getMonth()+1;
+    dayBox.value=now.getDate();
 }
