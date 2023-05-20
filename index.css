@@ -11,7 +11,15 @@
     color: blue;
     text-decoration:underline;
 }
+input{
+    font-size: 15px;
+    box-sizing: border-box;
+    text-align: right;
+}
 
+.inputBox{
+    width: 100%;
+}
 
 #balance {
     width: fit-content;
@@ -34,11 +42,6 @@
     background-color: greenyellow;
     border-radius:50vmin;
     font-size: 15px;
-}
-
-.date{
-    width: 20%;
-    text-align: right;
 }
 
 #balance .balanceAmount{
@@ -64,6 +67,13 @@ th{
 .colAmount{
     width: 80px;
 }
+.noRightBorder{
+    border-right: none;
+}
+.noLeftBorder{
+    border-left: none;
+}
+
 .remove{
     width: 40px;
 }
@@ -72,4 +82,12 @@ th{
     font-size: 15px;
     text-align: center;
     padding: 0;
+}
+
+.dateEdit{
+    width:40%;
+    text-align: right;
+}
+.yearEdit{
+    width: 100%;
 }

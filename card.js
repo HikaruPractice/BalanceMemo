@@ -1,5 +1,14 @@
-const Card=function(name,transactionsArray){
-    this.name=name;
+const Card=function(name,memo,transactionsArray){
+    if(typeof name !== 'string' || name === ''){
+        this.name='(無名)';
+    }else{
+        this.name=name;
+    }
+    if(typeof memo !== 'string'){
+        this.memo="";
+    }else{
+        this.memo=memo;
+    }
     this.transactions=new Array();
     if(typeof transactionsArray !== 'undefined'){
         var buf=new Array();
@@ -39,8 +48,13 @@ Card.prototype={
         }
         this.transactions.unshift(new Transaction(date,amount,summary));
         },
+    editTransaction:function(date,amount,summary,transactionIndex){
+        this.removeTransaction(transactionIndex);
+        this.addTransaction(date,amount,summary);
+    },
     removeTransaction:function(transactionIndex){this.transactions.splice(transactionIndex,1);},
     getName:function(){return this.name},
+    getMemo:function(){return this.memo},
     getTransactions:function(){return this.transactions;},
     getTransaction:function(transactionIndex){return this.transactions[transactionIndex];},
     getBalance:function(){

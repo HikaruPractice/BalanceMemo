@@ -36,6 +36,9 @@
                     <th class="colSummary">
                         メモ
                     </th>
+                    <th class="remove">
+                        削除
+                    </th>
                 </tr>
                 <script>
                     var buf="";
@@ -44,21 +47,85 @@
                     buf+=`
                     <tr>
                         <td>
-                            <span class="cardName" onClick="selectCard('${cards[i].getName()}')">${cards[i].getName()}</span>
+                            <span class="cardName" onClick="selectCard('${i}')">${cards[i].getName()}</span>
                         </td>
                         <td>
                             ${cards[i].getBalance()}
                         </td>
                         <td>
+                            ${cards[i].getMemo()}
+                        </td>
+                        <td>
+                            <button class="removeButton" onClick="removeCard(${i})">削除</button>
+                            
                         </td>`
+                        
                     }
                     document.getElementsByClassName('accountList')[0].innerHTML+=buf;
                 </script>
             </table>
-            <!--新規追加機能付けたい-->
-            <label>新規口座名:<input type="text" name="newCard"></label><br>
-            <label>初期残高:<input type="text" name="newCardBalance"></label><br>
+            <table>
+                <caption>新規追加</caption>
+                <tr>
+                    <td class="colDate">
+                    新規口座:
+                    </td>
+                    <td colspan="6">
+                        <input type="text" name="newCard" class=" inputBox">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="colDate">
+                        日付:
+                    </td>
+                    <td class="noRightBorder">
+                        <input name="newCardyear" class="date inputBox" type="number" step="1">
+                    </td>
+                    <td class="noLeftBorder">
+                        年
+                    </td>
+                    <td class="noRightBorder">
+                        <input name="newCardmonth" class="date inputBox" type="number" step="1" max="12" min="1">
+                    </td>
+                    <td class="noLeftBorder">
+                        月
+                    </td>
+                    <td class="noRightBorder">
+                        <input name="newCardday" class="date inputBox" type="number" step="1" max="31" min="1">
+                    </td>
+                    <td class="noLeftBorder">
+                        日
+                    </td>
+                </tr>
+                <tr id="newCardDayError" style="display: none;">
+                    <td colspan="7" style="color: red;">
+                        無効な日付です
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        初期残高:
+                    </td>
+                    <td colspan="5" class="noRightBorder">
+                        <input type="number" name="newCardBalance" class="inputBox">
+                    </td>
+                    <td class="noLeftBorder">
+                        円
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        メモ:
+                    </td>                    
+                    <td colspan="6">
+                        <input type="text" name="newCardMemo" class=" inputBox">
+                    </td>
+                </tr>
+            </table>
+            <label></label><br>
+            <label></label><br>
             <button onclick="createCard()">追加</button>
+            <button onclick="localStorage.clear()">全データ削除</button>
         </div>
         <div id="content" >
             <div id="balance">
@@ -70,28 +137,88 @@
                 </script>
             </div>
             <div id="input">
-                <input name="year" class="date" type="number" step="1">年
-                <input name="month" class="date" type="number" step="1" max="12" min="1">月
-                <input name="day" class="date" type="number" step="1" max="31" min="1">日<br>
-                <input name="amount" style="width: calc(100% - 30px);">円<br>
-                <label for="">摘要:<input name="summary" type="text" style="width: calc(100% - 60px);"></label>
-                <button onclick="addTransaction()">追加</button>
+                <table >
+                    <caption>取引入力</caption>
+                    <tr>
+                        <td class="colDate">
+                            日付:
+                        </td>
+                        <td class="noRightBorder">
+                            <input name="year" class="date inputBox" type="number" step="1">
+                        </td>
+                        <td class="noLeftBorder">
+                            年
+                        </td>
+                        <td class="noRightBorder">
+                            <input name="month" class="date inputBox" type="number" step="1" max="12" min="1">
+                        </td>
+                        <td class="noLeftBorder">
+                            月
+                        </td>
+                        <td class="noRightBorder">
+                            <input name="day" class="date inputBox" type="number" step="1" max="31" min="1">
+                        </td>
+                        <td class="noLeftBorder">
+                            日
+                        </td>
+                    </tr>
+                    <tr id="dayError" style="display: none;">
+                        <td colspan="7" style="color: red;">
+                            無効な日付です
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="amount">金額:</label>
+                        </td>
+                        <td colspan="5" class="noRightBorder">
+                            <input type="number" name="amount" class="inputBox">
+                        </td>                    
+
+                        <td class="noLeftBorder">
+                            円
+                        </td>
+                    </tr>
+                    <tr id="amountError" style="display: none;">
+                        <td colspan="7" style="color: red;">
+                            数値を入れてください
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="summary">摘要:</label>
+                        </td>
+                        <td colspan="6">
+                            <input name="summary" type="text" class="inputBox">
+                        </td>
+                    </tr>
+                </table>
+                
+                <label for=""></label>
+                <button onclick="addTransaction()" style="float: right;">追加</button>
             </div>
             <div id="statement">
                 <table class="transaction">
                     <caption>決済履歴</caption>
+                    <colgroup>
+                        <col  class="colDate"> 
+                        <col  style="width: calc(100% - 20px);">
+                        <col style="width: 20px;">
+                        <col  class="colSummary">
+                        <col class="remove">
+                    </colgroup>
                     <tr>
-                        <th class="colDate">
+                        <th>
                             日付
                         </th>
-                        <th class="colAmount">
+                        <th colspan="2">
                             金額
                         </th>
-                        <th class="colSummary">
+                        <th>
                             摘要
                         </th>
-                        <th class="remove">
-                            削除
+                        <th>
+                            操作
                         </th>
                     </tr>
                     <script>
@@ -100,19 +227,43 @@
                         var len = card.getTransactions().length;
                         for (var i = len - 1; 0 <= i; i--) {
                             buf += `
-                    <tr>
+                    <tr id="ts${i}" style="display:table-row;" onClick="editMode(${i})">
                         <td>
-                            ${card.getTransaction(i).getDate()}
+                            ${card.getTransaction(i).getMonth()}/${card.getTransaction(i).getDay()}
                         </td>
-                        <td>
-                            ${card.getTransaction(i).getAmountText()}
+                        <td  class="noRightBorder">
+                            ${card.getTransaction(i).getAmount()}
+                        </td>
+                        <td  class="noLeftBorder">
+                            円
                         </td>
                         <td>
                             ${card.getTransaction(i).getSummary()}
                         </td>
                         <td>
                             <button class="removeButton" onClick="removeTransaction(${i})">削除</button>
-                    </tr>`
+                        </td>
+                    </tr>
+                    <tr id="ts${i}_edit" style="display:none;">
+                        <td>
+                            <input name="year" class="yearEdit year" value="${card.getTransaction(i).getFullYear()}"><br>
+                            <input name="month" class="dateEdit month" value="${card.getTransaction(i).getMonth()}">/
+                            <input name="day" class="dateEdit day" value="${card.getTransaction(i).getDay()}">
+                        </td>
+                        <td  class="noRightBorder">
+                            <input name="amount" class="inputBox amount" value="${card.getTransaction(i).getAmount()}">
+                        </td>
+                        <td class="noLeftBorder">
+                            円
+                        </td>
+                        <td>
+                            <input name="summary" class="inputBox summary" value="${card.getTransaction(i).getSummary()}">
+                        </td>
+                        <td>
+                            <button class="removeButton" onClick="editTransaction(${i})">編集</button>
+                        </td>
+                    </tr>
+                    `
                         }
                         _table.innerHTML += buf;
                     </script>
@@ -120,6 +271,19 @@
             </div>
         </div>
     </div>
+    付ける機能
+
+
+口座編集
+決済履歴編集
+
+データ入出力
+
+日付入力改善(エンターで次)
+
+口座選択はメニュー風に
+
+カード重複防ぐ
 </body>
 
 </html>
