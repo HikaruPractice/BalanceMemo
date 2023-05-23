@@ -16,8 +16,8 @@
     <script src="card.js"></script>
     <script src="localStorage.js"></script>
     <script src="table.js"></script>
-    <script src="index.js"></script>
     <script src="file.js"></script>
+    <script src="index.js"></script>
 </head>
 
 <body>
@@ -122,6 +122,11 @@
                 </tr>
             </table>
             <button onclick="createCard()">追加</button>
+            <br>
+            <input id="inputFile" type="file"><br>
+            <button onclick="inputFile()">選択ファイルから追加</button>
+            <br>
+            <br>
             <button onclick="localStorage.clear()">全データ削除</button>
         </div>
         <div id="content" >
@@ -230,11 +235,10 @@
             </div>
         </div>
     </div>
-    データ入出力
-
-日付入力改善(エンターで次)
 
 口座選択はメニュー風に
+日付入力改善(エンターで次)
+
 
 他のアプリ(家計簿・会計)みてデザインする
 </body>

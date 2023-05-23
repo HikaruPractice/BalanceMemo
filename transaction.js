@@ -23,12 +23,13 @@ Transaction.prototype={
     getAmountText:function(){return `${this.amount.toLocaleString()}円`},
     getSummary:function(){return `${this.summary}`},
     getFullDate:function(){return `${this.year}/${this.month}/${this.day}`},
-    getFullDateYYYYMMDD:function(){
+    getFullDate2:function(){
         var yearText=this.year.toString();
         var monthText=('0'+this.month.toString()).slice(-2);
         var dayText=('0'+this.day.toString()).slice(-2);
-        return `${yearText}${monthText}${dayText}`
+        return `${yearText}/${monthText}/${dayText}`
     },
+    getFullDateYYYYMMDD:function(){return this.getFullDate2().replace(/\//g,'');},
     getAmount:function(){return this.amount},
     infoAll:function(){
         console.log(`[${this.getFullDate()},${this.getAmountText()},${this.getSummary()}]`);

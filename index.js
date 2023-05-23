@@ -5,6 +5,7 @@ var menu=true;
 {
     console.log('ページが更新されました'+`${new Date().getMinutes()}分${new Date().getSeconds()}秒`)
     loadFromLocalStorage();
+
 }
 
 function setSelectedCard(){
@@ -39,8 +40,8 @@ window.onload = () => {
     table();
     dateInputboxReset(document.getElementsByName('year')[0], document.getElementsByName('month')[0],document.getElementsByName('day')[0]);
     dateInputboxReset(document.getElementsByName('newCardyear')[0], document.getElementsByName('newCardmonth')[0],document.getElementsByName('newCardday')[0]);
-}
 
+    }
 
 function removeEnableCard(){
     tableAccounts();
