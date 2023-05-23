@@ -15,13 +15,20 @@ function inputFile(){
                 list[i]=list[i].split(/,|\//);
             }
             var transactionsArray=new Array();
-            for (var i=4;i<len;i++){
+            var newCard
+            var i;
+            for (var i=1;i<len;i++){
                 if (!checkDateFormat(list[i][0],list[i][1],list[i][2])){
                     break;
                 }
                 transactionsArray.push(list[i]);
             }
-            var newCard = new Card(list[1][0],list[1][2],transactionsArray);
+            if(transactionsArray.length===0){
+                newCard = new Card(list[1][3],list[1][5]);
+            }else{
+                newCard = new Card(list[1][5],list[1][7],transactionsArray);
+                newCard.sortTransactions();
+            }
             cards.push(newCard);
             selected=cards.length-1;
             saveToLocalStrorage();
@@ -48,14 +55,19 @@ function outputFile(){
     var buf='';
     var target;
     const len=card.getTransactions().length;
-    buf+=`口座名,残高,メモ`+'\n'
-    buf+=`${card.getName().replace(/,/g,'_')},${card.getBalance()},${card.getMemo()}`+'\n'
-    buf+='\n'
-    buf+='日付,金額,摘要'+'\n';
-    for (var i=0;i<len;i++){
-        target=card.getTransaction(i)
-        buf+=`${target.getFullDate2()},${target.getAmount()},${target.getSummary()}`+'\n'
+    var cardInfo=`${card.getName().replace(/,/g,'_')},${card.getBalance()},${card.getMemo()}`
+    buf+='日付,金額,摘要,口座名,残高,メモ'+'\n';
+    if(len===0){
+        buf+=',,,'+cardInfo+'\n';
+    }else{
+        target=card.getTransaction(0);
+        buf+=`${target.getFullDate2()},${target.getAmount()},${target.getSummary()},${cardInfo}`+'\n'
+        for (var i=1;i<len;i++){
+            target=card.getTransaction(i);
+            buf+=`${target.getFullDate2()},${target.getAmount()},${target.getSummary()}`+'\n'
+        }
     }
+
     download_csv(filenameFormat(card.getName()),buf);
 }
 
