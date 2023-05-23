@@ -20,6 +20,9 @@ input{
 .inputBox{
     width: 100%;
 }
+.inputBox2{
+    width: calc(100% - 25px);
+}
 
 #balance {
     width: fit-content;
@@ -50,6 +53,7 @@ input{
 }
 
 table{
+    table-layout: fixed;
     width: 100%;
     border-collapse:collapse;
     text-align: right;
@@ -62,10 +66,10 @@ th{
     text-align: center;
 }
 .colDate{
-    width: 80px;
+    width: 100px;
 }
 .colAmount{
-    width: 80px;
+    width: 100px;
 }
 .noRightBorder{
     border-right: none;
@@ -85,10 +89,22 @@ th{
 }
 
 .dateEdit{
-    width:40%;
     text-align: right;
 }
-.yearEdit{
-    width: 100%;
+
+.amount{
+    width: 75px;
+}
+
+.inputTable{
+    table-layout: auto;
+    border: none;
+}
+.inputTable tr,.inputTable td{
+    border:none;
+}
+
+.memo_summary{
+    text-align: left;
 }
 

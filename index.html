@@ -14,10 +14,10 @@
 		<![endif]-->
     <script src="transaction.js"></script>
     <script src="card.js"></script>
-    <script src="cards.js"></script>
     <script src="localStorage.js"></script>
     <script src="table.js"></script>
     <script src="index.js"></script>
+    <script src="file.js"></script>
 </head>
 
 <body>
@@ -26,14 +26,21 @@
         <label class="tab" for="menuTab">口座選択</label>
         <div id="menu">
             <table class="accountList">
+                <!-- 口座一覧表　スクリプトで表生成 -->
+                <!-- tableAccounts() -->
+            </table>
+            <label><input id="removePermissionCard" name="removePermissionCard" type="checkbox" onclick="removeEnableCard()">削除有効</label>
+            <table class="accountList_removed">
+                <!-- 口座一覧(削除済)表　スクリプトで表生成 -->
+                <!-- tableAccounts() -->
             </table>
             <table>
                 <caption>新規追加</caption>
                 <tr>
                     <td class="colDate">
-                    新規口座:
+                        新規口座:
                     </td>
-                    <td colspan="6">
+                    <td colspan="3">
                         <input type="text" name="newCard" class=" inputBox">
                     </td>
                 </tr>
@@ -41,27 +48,49 @@
                     <td class="colDate">
                         日付:
                     </td>
-                    <td class="noRightBorder">
-                        <input name="newCardyear" class="date inputBox" type="number" step="1">
+                    <td>
+                        <table class="inputTable">
+                            <tr>
+                                <td>
+                                    <input name="newCardyear" class="date inputBox" type="number" step="1">
+                                </td>
+                                <td>
+                                    年
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td class="noLeftBorder">
-                        年
+                    <td>
+                        
+                        <table class="inputTable">
+                            <tr>
+                                <td>
+                                    <input name="newCardmonth" class="date inputBox" type="number" step="1" max="12" min="1">
+                                </td>
+                                <td>
+                                    月
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td class="noRightBorder">
-                        <input name="newCardmonth" class="date inputBox" type="number" step="1" max="12" min="1">
+                    <td>
+                        <table class="inputTable">
+                            <tr>
+                                <td>
+                            <input name="newCardday" class="date inputBox" type="number" step="1" max="31" min="1">
+                                    
+                                </td>
+                                <td>
+                            日
+                                    
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td class="noLeftBorder">
-                        月
-                    </td>
-                    <td class="noRightBorder">
-                        <input name="newCardday" class="date inputBox" type="number" step="1" max="31" min="1">
-                    </td>
-                    <td class="noLeftBorder">
-                        日
-                    </td>
+
                 </tr>
                 <tr id="newCardDayError" style="display: none;">
-                    <td colspan="7" style="color: red;">
+                    <td colspan="4" style="color: red;">
                         無効な日付です
                     </td>
                 </tr>
@@ -69,24 +98,29 @@
                     <td>
                         初期残高:
                     </td>
-                    <td colspan="5" class="noRightBorder">
-                        <input type="number" name="newCardBalance" class="inputBox">
-                    </td>
-                    <td class="noLeftBorder">
-                        円
+
+                    <td colspan="3">
+                        <table class="inputTable">
+                            <tr>
+                                <td>
+                                    <input type="number" name="newCardBalance" class="inputBox">
+                                </td>
+                                <td>
+                                    円
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         メモ:
                     </td>                    
-                    <td colspan="6">
+                    <td colspan="3">
                         <input type="text" name="newCardMemo" class=" inputBox">
                     </td>
                 </tr>
             </table>
-            <label></label><br>
-            <label></label><br>
             <button onclick="createCard()">追加</button>
             <button onclick="localStorage.clear()">全データ削除</button>
         </div>
@@ -100,27 +134,49 @@
                         <td class="colDate">
                             日付:
                         </td>
-                        <td class="noRightBorder">
-                            <input name="year" class="date inputBox" type="number" step="1">
+                        <td>
+                            <table class="inputTable">
+                                <tr>
+                                    <td>
+                                        
+                                        <input name="year" class="date inputBox" type="number" step="1">
+                                    </td>
+                                    <td>
+                                        年
+                                    </td>
+                                </tr>
+                            </table>
+                            
                         </td>
-                        <td class="noLeftBorder">
-                            年
+                        <td>                        
+                            <table class="inputTable">
+                            <tr>
+                                <td>
+                                    <input name="month" class="date inputBox" type="number" step="1" max="12" min="1">
+                                </td>
+                                <td>
+                                    月
+                                </td>
+                            </tr>
+                        </table>
                         </td>
-                        <td class="noRightBorder">
-                            <input name="month" class="date inputBox" type="number" step="1" max="12" min="1">
-                        </td>
-                        <td class="noLeftBorder">
-                            月
-                        </td>
-                        <td class="noRightBorder">
-                            <input name="day" class="date inputBox" type="number" step="1" max="31" min="1">
-                        </td>
-                        <td class="noLeftBorder">
-                            日
+                        <td>
+                            <table class="inputTable">
+                                <tr>
+                                    <td>
+                                        <input name="day" class="date inputBox" type="number" step="1" max="31" min="1">
+                                    </td>
+                                    <td>
+                                        日
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            
                         </td>
                     </tr>
                     <tr id="dayError" style="display: none;">
-                        <td colspan="7" style="color: red;">
+                        <td colspan="4" style="color: red;">
                             無効な日付です
                         </td>
                     </tr>
@@ -128,16 +184,26 @@
                         <td>
                             <label for="amount">金額:</label>
                         </td>
-                        <td colspan="5" class="noRightBorder">
-                            <input type="number" name="amount" class="inputBox">
-                        </td>                    
-
-                        <td class="noLeftBorder">
-                            円
+                        <td colspan="3" class="noRightBorder">
+                            <table class="inputTable">
+                                <tr>
+                                    <td colspan="2">
+                                        <label><input type="checkbox" name="charge">入金</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="number" name="amount" class="inputBox">
+                                    </td>
+                                    <td>
+                                         円
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                     <tr id="amountError" style="display: none;">
-                        <td colspan="7" style="color: red;">
+                        <td colspan="4" style="color: red;">
                             数値を入れてください
                         </td>
                     </tr>
@@ -145,34 +211,32 @@
                         <td>
                             <label for="summary">摘要:</label>
                         </td>
-                        <td colspan="6">
+                        <td colspan="3">
                             <input name="summary" type="text" class="inputBox">
                         </td>
                     </tr>
                 </table>
-                
-                <label for=""></label>
                 <button onclick="addTransaction()" style="float: right;">追加</button>
             </div>
             <div id="statement">
+                <label><input id="removePermissionTransaction" name="removePermissionTransaction" type="checkbox" onclick="removeEnableTransaction()">削除有効</label>
                 <table class="transaction">
+                    <!-- 取引一覧表　スクリプトで表生成 -->
                 </table>
+                <label><input type="checkbox" id="multiEditMode" onclick="multiEditMode()">複数編集モード</label>
+                <button id="multiEditSave" style="display: none;" onclick="multiEditTransaction()">保存</button>
+                <br>
+                <button onclick="outputFile()">ファイルに保存</button>
             </div>
         </div>
     </div>
-    付ける機能
-
-
-口座編集
-決済履歴編集
-
-データ入出力
+    データ入出力
 
 日付入力改善(エンターで次)
 
 口座選択はメニュー風に
 
-カード重複防ぐ
+他のアプリ(家計簿・会計)みてデザインする
 </body>
 
 </html>
