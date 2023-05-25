@@ -1,4 +1,4 @@
-const Card=function(name,memo,transactionsArray){
+const Card=function(name,memo,transactionsArray,removed){
     if(typeof name !== 'string' || name === ''){
         this.name='(無名)';
     }else{
@@ -11,8 +11,7 @@ const Card=function(name,memo,transactionsArray){
     }
     this.transactions=new Array();
     this.setTransactions(transactionsArray);
-    this.removed=false;
-    
+    this.removed=(removed===true)?true:false;
 }
 
 

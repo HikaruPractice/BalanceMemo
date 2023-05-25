@@ -1,10 +1,37 @@
-#menu,
-#menuTab:checked ~ #content{
-    display: none;
+.wrapper{
+    position: relative;
 }
-#menuTab:checked ~ #menu,
-#content{
-    display: block;
+
+header{
+    background-color: rgb(255, 240, 155);
+}
+
+.tab{
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;    
+    height: 40px;
+    line-height: 30px;
+    border: 5px gray double;
+}
+
+#menuTab{
+    display: none;
+    z-index: 30;
+}
+
+#menu{
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    left:-100%;
+    z-index: 20;
+    transition: left 0.5s ;
+}
+#menuTab:checked ~ #menu{
+    visibility: visible;
+    left:0;
+    transition: left 0.5s ;
 }
 
 .cardName{
@@ -108,3 +135,10 @@ th{
     text-align: left;
 }
 
+#menu{
+    background-color: lightcyan;
+}
+#content{
+    background-color: honeydew;
+    z-index: 10;
+}

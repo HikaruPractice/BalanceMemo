@@ -13,7 +13,7 @@ function loadFromLocalStorage() {
     }
     var len = Object.keys(buf.cards).length;
     for (i=0;i<len;i++){
-        cards.push(new Card(buf.cards[i].name,buf.cards[i].memo,buf.cards[i].transactions))
+        cards.push(new Card(buf.cards[i].name,buf.cards[i].memo,buf.cards[i].transactions,buf.cards[i].removed))
     }
     selected = buf.selected;
 }

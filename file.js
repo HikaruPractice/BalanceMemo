@@ -11,12 +11,11 @@ function inputFile(){
             if (len<2){
                 return;
             }
-            for (var i=0;i<len;i++){
+            for (var i=1;i<len;i++){
                 list[i]=list[i].split(/,|\//);
             }
             var transactionsArray=new Array();
             var newCard
-            var i;
             for (var i=1;i<len;i++){
                 if (!checkDateFormat(list[i][0],list[i][1],list[i][2])){
                     break;
