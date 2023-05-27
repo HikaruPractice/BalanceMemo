@@ -16,11 +16,27 @@ function inputFile(){
             }
             var transactionsArray=new Array();
             var newCard
+            
             for (var i=1;i<len;i++){
                 if (!checkDateFormat(list[i][0],list[i][1],list[i][2])){
-                    break;
+                    if(i===1){
+                        if (checkDateFormat(new Date().getFullYear(),list[i][0],list[i][1])){
+                            list[i].unshift(new Date().getFullYear());
+                            transactionsArray.push(list[i]);
+                        }else{
+                            break;
+                        }
+                    }else{
+                        if(checkDateFormat(transactionsArray[(i-1)-1][0],list[i][0],list[i][1])){
+                            list[i].unshift(transactionsArray[(i-1)-1][0]);
+                            transactionsArray.push(list[i]);
+                        }else{
+                            break;
+                        }
+                    }
+                }else{
+                    transactionsArray.push(list[i]);
                 }
-                transactionsArray.push(list[i]);
             }
             if(transactionsArray.length===0){
                 newCard = new Card(list[1][3],list[1][5]);

@@ -1,9 +1,9 @@
 function table(){
     setSelectedCard();
+    document.getElementById('menuTab').checked = menu;
     tableAccounts();
     displayBalance();
     tableContent();
-    document.getElementById('menuTab').checked = menu;
 }
 function tableAccounts(){
         var buf=`

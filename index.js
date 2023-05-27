@@ -13,8 +13,10 @@ function setSelectedCard(){
         card = new Card('[未選択]');
         menu=true;
         document.getElementById('content').style.display='none';
+        document.getElementById('noSelected').style.display='';
     }else{
         document.getElementById('content').style.display='';
+        document.getElementById('noSelected').style.display='none';
         card = cards[selected];
         menu=false;
     }
