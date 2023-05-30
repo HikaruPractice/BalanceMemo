@@ -39,6 +39,10 @@ header{
     transition: left 0.3s, right 0.3s;
 }
 
+.accountLists  td:nth-child(3){
+    text-align: right;
+}
+
 
 
 
@@ -56,6 +60,10 @@ input{
 }
 .inputBox2{
     width: calc(100% - 25px);
+}
+
+.addForm td:first-child{
+    text-align: right;
 }
 
 #balance {
@@ -90,7 +98,6 @@ table{
     table-layout: fixed;
     width: 100%;
     border-collapse:collapse;
-    text-align: right;
 }
 tr,td,th{
     border:solid  1px black;
@@ -115,20 +122,10 @@ th{
 .remove{
     width: 40px;
 }
-.removeButton{
-    width:40px;
-    font-size: 15px;
-    text-align: center;
-    padding: 0;
-}
-
 .dateEdit{
     text-align: right;
 }
 
-.amount{
-    width: 75px;
-}
 
 .inputTable{
     table-layout: auto;
@@ -152,4 +149,35 @@ th{
 
 .year,.amount,.date{
     text-align: right;
+}
+
+.dateRow{
+    text-align: left;
+}
+
+.editTable,.editTable tr,.editTable td{
+    border: none;
+}
+
+.buttons{
+    width: 25px;
+}
+.displayRow td:nth-child(1){
+    text-align: left;
+}
+.displayRow td:nth-child(2){
+    text-align: right;
+}
+.displayRow td:last-child{
+    text-align: center;
+}
+.displayRow td[colspan]{
+    text-align: left;
+}
+
+.colAmountEdit{
+    text-align: right;
+}
+.amount{
+    width: 70px;
 }

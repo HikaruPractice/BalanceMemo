@@ -158,9 +158,10 @@ function addTransaction() {
 
 function editTransaction(index){
     var target = document.getElementById(`ts${index}_edit`);
-    var year=target.getElementsByClassName('year')[0].value;
-    var month=target.getElementsByClassName('month')[0].value;
-    var day=target.getElementsByClassName('day')[0].value;
+    let target2 = document.getElementById(`ts${index}-date_edit`);
+    var year=target2.getElementsByClassName('year')[0].value;
+    var month=target2.getElementsByClassName('month')[0].value;
+    var day=target2.getElementsByClassName('day')[0].value;
     var amount=0;
     var summary=target.getElementsByClassName('summary')[0].value;
     
@@ -220,14 +221,22 @@ function removeTransaction(index) {
 
 function editMode(n){
     resetEditMode()
+    //if(document.getElementById(`ts${n}-date`)!==null){
+    //    document.getElementById(`ts${n}-date`).style.display="none";
+    //}
     document.getElementById(`ts${n}`).style.display="none";
+    document.getElementById(`ts${n}-date_edit`).style.display="";
     document.getElementById(`ts${n}_edit`).style.display="";
 }
 
 function resetEditMode(){
     var len = card.getTransactions().length;
     for(i=0;i<len;i++){
+        if(document.getElementById(`ts${i}-date`)!==null){
+            document.getElementById(`ts${i}-date`).style.display="";
+        }
         document.getElementById(`ts${i}`).style.display="";
+        document.getElementById(`ts${i}-date_edit`).style.display="none";
         document.getElementById(`ts${i}_edit`).style.display="none";
     }
 }
@@ -239,16 +248,28 @@ function multiEditMode(){
         document.getElementById('multiEditSave').style.display="";
         for(i=0;i<len;i++){
             document.getElementById('removePermissionTransaction').disabled=true;
-            document.getElementById(`ts${i}`).style.display="none";
-            document.getElementById(`ts${i}_edit`).style.display="";
+            for(i=0;i<len;i++){
+                if(document.getElementById(`ts${i}-date`)!==null){
+                    document.getElementById(`ts${i}-date`).style.display="none";
+                }
+                document.getElementById(`ts${i}`).style.display="none";
+                document.getElementById(`ts${i}-date_edit`).style.display="";
+                document.getElementById(`ts${i}_edit`).style.display="";
+            }
             document.getElementsByClassName('editTransaction')[len-i-1].disabled=true;
         }
     }else{        
         document.getElementById('multiEditSave').style.display="none";
         for(i=0;i<len;i++){
             document.getElementById('removePermissionTransaction').disabled=false;
-            document.getElementById(`ts${i}`).style.display="";
-            document.getElementById(`ts${i}_edit`).style.display="none";
+            for(i=0;i<len;i++){
+                if(document.getElementById(`ts${i}-date`)!==null){
+                    document.getElementById(`ts${i}-date`).style.display="";
+                }
+                document.getElementById(`ts${i}`).style.display="";
+                document.getElementById(`ts${i}-date_edit`).style.display="none";
+                document.getElementById(`ts${i}_edit`).style.display="none";
+            }
             document.getElementsByClassName('editTransaction')[len-i-1].disabled=false;
         }
     }
@@ -318,4 +339,15 @@ function dateInputboxReset(yearBox,monthBox,dayBox){
     yearBox.value=now.getFullYear();
     monthBox.value=now.getMonth()+1;
     dayBox.value=now.getDate();
+}
+
+function nextDate(id,b){
+    let year=document.getElementById(id).getElementsByClassName('year')[0];
+    let month=document.getElementById(id).getElementsByClassName('month')[0];
+    let day=document.getElementById(id).getElementsByClassName('day')[0];
+    let date=new Date(year.value,Number(month.value)-1,day.value);
+    date.setDate(date.getDate()+(b?-1:1))
+    year.value=date.getFullYear();
+    month.value=date.getMonth()+1;
+    day.value=date.getDate();
 }

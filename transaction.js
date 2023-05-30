@@ -20,9 +20,14 @@ Transaction.prototype={
     getFullYear:function(){return this.year},
     getMonth:function(){return this.month},
     getDay:function(){return this.day},
+    getWeeek:function(){
+        const weekItems = ["日", "月", "火", "水", "木", "金", "土"];
+        return weekItems[new Date(this.getFullYear(),this.getMonth()-1,this.getDay()).getDay()]},
     getAmountText:function(){return `${this.amount.toLocaleString()}円`},
     getSummary:function(){return `${this.summary}`},
-    getFullDate:function(){return `${this.year}/${this.month}/${this.day}`},
+    getFullDate:function(){
+        return `${this.year}年${this.month}月${this.day}日(${this.getWeeek()})`
+    },
     getFullDate2:function(){
         var yearText=this.year.toString();
         var monthText=('0'+this.month.toString()).slice(-2);

@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>aaa</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="button.css">
     <link rel="stylesheet" href="responsive.css">
 
     <!--[if lt IE 9]>
@@ -29,24 +31,32 @@
 
         <div id="menu" class="trans">
 
-            <table class="accountList">
+            <table class="accountList accountLists">
                 <!-- 口座一覧表　スクリプトで表生成 -->
                 <!-- tableAccounts() -->
             </table>
             <label><input id="removePermissionCard" name="removePermissionCard" type="checkbox"
                     onclick="removeEnableCard()">削除有効</label>
-            <table class="accountList_removed">
+            <table class="accountList_removed accountLists">
                 <!-- 口座一覧(削除済)表　スクリプトで表生成 -->
                 <!-- tableAccounts() -->
             </table>
-            <table>
+            <table class="addForm">
                 <caption>新規追加</caption>
                 <tr>
                     <td class="colDate">
                         新規口座:
                     </td>
-                    <td colspan="3">
+                    <td>
                         <input type="text" name="newCard" class=" inputBox">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        メモ:
+                    </td>
+                    <td>
+                        <input type="text" name="newCardMemo" class=" inputBox">
                     </td>
                 </tr>
                 <tr>
@@ -54,50 +64,55 @@
                         日付:
                     </td>
                     <td>
-                        <table class="inputTable">
-                            <tr>
-                                <td>
-                                    <input name="newCardyear" class="date inputBox" type="number" step="1">
-                                </td>
-                                <td>
-                                    年
-                                </td>
-                            </tr>
-                        </table>
+                        <table id="addCardDate" class="inputTable"><tr>
+                            <td><span onclick="nextDate('addCardDate',true)" class="fas fa-chevron-circle-left nextButton"></span></td>
+                            <td>
+                                <table class="inputTable">
+                                    <tr>
+                                        <td>
+                                            <input name="newCardyear" class="date inputBox year" type="number" step="1">
+                                        </td>
+                                        <td>
+                                            年
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+
+                                <table class="inputTable">
+                                    <tr>
+                                        <td>
+                                            <input name="newCardmonth" class="date inputBox month" type="number" step="1" max="12"
+                                                min="1">
+                                        </td>
+                                        <td>
+                                            月
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="inputTable">
+                                    <tr>
+                                        <td>
+                                            <input name="newCardday" class="date inputBox day" type="number" step="1" max="31"
+                                                min="1">
+
+                                        </td>
+                                        <td>
+                                            日
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td><span onclick="nextDate('addCardDate',false)" class="fas fa-chevron-circle-right nextButton"></span></td>
+                        </tr></table>
                     </td>
-                    <td>
-
-                        <table class="inputTable">
-                            <tr>
-                                <td>
-                                    <input name="newCardmonth" class="date inputBox" type="number" step="1" max="12"
-                                        min="1">
-                                </td>
-                                <td>
-                                    月
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <table class="inputTable">
-                            <tr>
-                                <td>
-                                    <input name="newCardday" class="date inputBox" type="number" step="1" max="31"
-                                        min="1">
-
-                                </td>
-                                <td>
-                                    日
-
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
                 </tr>
                 <tr id="newCardDayError" style="display: none;">
-                    <td colspan="4" style="color: red;">
+                    <td colspan="2" style="color: red;">
                         無効な日付です
                     </td>
                 </tr>
@@ -106,7 +121,7 @@
                         初期残高:
                     </td>
 
-                    <td colspan="3">
+                    <td>
                         <table class="inputTable">
                             <tr>
                                 <td>
@@ -117,14 +132,6 @@
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        メモ:
-                    </td>
-                    <td colspan="3">
-                        <input type="text" name="newCardMemo" class=" inputBox">
                     </td>
                 </tr>
             </table>
@@ -140,7 +147,7 @@
             <div id="content" style="display: none;">
                 <div id="balance">
                 </div>
-                <div id="input">
+                <div id="input" class="addForm">
                     <table>
                         <caption>取引入力</caption>
                         <tr>
@@ -148,50 +155,52 @@
                                 日付:
                             </td>
                             <td>
-                                <table class="inputTable">
-                                    <tr>
-                                        <td>
-
-                                            <input name="year" class="date inputBox" type="number" step="1">
-                                        </td>
-                                        <td>
-                                            年
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </td>
-                            <td>
-                                <table class="inputTable">
-                                    <tr>
-                                        <td>
-                                            <input name="month" class="date inputBox" type="number" step="1" max="12"
-                                                min="1">
-                                        </td>
-                                        <td>
-                                            月
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                            <td>
-                                <table class="inputTable">
-                                    <tr>
-                                        <td>
-                                            <input name="day" class="date inputBox" type="number" step="1" max="31"
-                                                min="1">
-                                        </td>
-                                        <td>
-                                            日
-                                        </td>
-                                    </tr>
-                                </table>
-
-
+                                <table id="addTsDate" class="inputTable"><tr>
+                                <td><span onclick="nextDate('addTsDate',true)" class="fas fa-chevron-circle-left nextButton"></span></td>
+                                <td>
+                                    <table class="inputTable">
+                                        <tr>
+                                            <td>
+                                                <input name="year" class="date inputBox year" type="number" step="1">
+                                            </td>
+                                            <td>
+                                                年
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="inputTable">
+                                        <tr>
+                                            <td>
+                                                <input name="month" class="date inputBox month" type="number" step="1" max="12"
+                                                    min="1">
+                                            </td>
+                                            <td>
+                                                月
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="inputTable">
+                                        <tr>
+                                            <td>
+                                                <input name="day" class="date inputBox day" type="number" step="1" max="31"
+                                                    min="1">
+                                            </td>
+                                            <td>
+                                                日
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td><span onclick="nextDate('addTsDate',false)" class="fas fa-chevron-circle-right nextButton"></span></td>
+                                </tr></table>
                             </td>
                         </tr>
                         <tr id="dayError" style="display: none;">
-                            <td colspan="4" style="color: red;">
+                            <td colspan="2" style="color: red;">
                                 無効な日付です
                             </td>
                         </tr>
@@ -199,14 +208,12 @@
                             <td>
                                 <label for="amount">金額:</label>
                             </td>
-                            <td colspan="3" class="noRightBorder">
+                            <td class="noRightBorder">
                                 <table class="inputTable">
                                     <tr>
-                                        <td colspan="2">
-                                            <label><input type="checkbox" name="charge">入金</label>
+                                        <td colspan="2" style="text-align: left;">
+                                            <input class="charge" id="addAmount" type="checkbox" name="charge"><label class="normalButton chargeLabel" for="addAmount"></label>
                                         </td>
-                                    </tr>
-                                    <tr>
                                         <td>
                                             <input type="number" name="amount" class="inputBox">
                                         </td>
@@ -218,7 +225,7 @@
                             </td>
                         </tr>
                         <tr id="amountError" style="display: none;">
-                            <td colspan="4" style="color: red;">
+                            <td colspan="2" style="color: red;">
                                 数値を入れてください
                             </td>
                         </tr>
@@ -226,7 +233,7 @@
                             <td>
                                 <label for="summary">摘要:</label>
                             </td>
-                            <td colspan="3">
+                            <td >
                                 <input name="summary" type="text" class="inputBox">
                             </td>
                         </tr>
@@ -250,12 +257,14 @@
             <p>口座を選択してください</p>
         </div>
     </div>
-    <div style="display: none;">
-        口座選択はメニュー風に
-        日付入力改善(エンターで次)
+    <div style="display: block;">
+        日付入力フォーム<br>
+
+        エンターで次<br>
 
 
-        他のアプリ(家計簿・会計)みてデザインする</div>
+        ボタンデザイン
+</div>
 </body>
 
 </html>

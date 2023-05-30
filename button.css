@@ -1,0 +1,114 @@
+.circleButton{
+    position: relative;
+    text-align: center;
+    line-height:20px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #333; /* 枠の調整 */
+    border-radius: 50%;  /* 丸みの度合い */
+    background: #fff; /* ボタンの背景色 */
+
+}
+.circleButton::before,.circleButton::after{
+    content: "";
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+}
+
+.normalButton{
+    display:  inline-block;
+    text-align: center;
+    line-height:20px;
+    position: relative;
+    width: 50px;
+    height: 20px;
+    border: 1px solid gray; /* 枠の調整 */
+    border-radius: 20px;  /* 丸みの度合い */
+    background: rgba(255,255,255,0.5); /* ボタンの背景色 */
+
+}
+
+.trashButton{
+    display: block;
+    margin: 0 auto;
+    background-color: orange;
+}
+.trashButton span{
+    position: absolute;
+    transform:translate(-50%,-50%);
+    font-size: 12px;
+}
+
+.beforeButton{
+    display:  block;
+    margin: 0 auto;
+    color: red;
+    font-size: 20px;
+}
+
+.removeButton{
+    display:  block;
+    margin: 0 auto;
+    background-color: red;
+    border: none;
+}
+
+.removeButton:disabled::before,.removeButton:disabled::after{
+    background: #333; /* バツ印の色 */
+}
+
+.removeButton:disabled{
+    background-color: gray;
+}
+
+.removeButton::before,.removeButton::after{
+    width: 2px; /* 棒の幅（太さ） */
+    height: 10px; /* 棒の高さ */
+    background:beige; /* バツ印の色 */
+}
+
+.removeButton::before{
+    transform:translate(-50%,-50%) rotate(45deg);
+}
+.removeButton::after{
+    transform:translate(-50%,-50%) rotate(-45deg);
+}
+
+.editButton{
+    display:  block;
+    margin: 0 auto;
+    border-color: green;
+    background: aquamarine; /* ボタンの背景色 */
+}
+.editButton::after{
+    position: absolute;
+    content: '';
+    width: 8px;
+    height: 4px;
+    border-left: 2px solid #25AF01;
+    border-bottom: 2px solid #25AF01;
+    transform: translate(-50%,-70%) rotate(-45deg);
+}
+
+.nextButton{
+    display: block;
+    margin: 0 auto;
+    font-size: 20px;
+    color: goldenrod;
+}
+
+.charge{
+    display: none;
+}
+
+.charge:checked ~ .chargeLabel{
+    background: yellow; /* ボタンの背景色 */
+}
+.chargeLabel::after{
+    content: '出金';
+}
+.charge:checked ~ .chargeLabel::after{
+    content: '入金';
+}
