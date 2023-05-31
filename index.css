@@ -107,7 +107,7 @@ th{
     text-align: center;
 }
 .colDate{
-    width: 100px;
+    width: 80px;
 }
 .colAmount{
     width: 100px;
@@ -134,6 +134,22 @@ th{
 .inputTable tr,.inputTable td{
     border:none;
 }
+
+.dateTable{
+    table-layout: fixed;
+    border: none;
+}
+.dateTable tr,.dateTable td{
+    border:none;
+}
+.dateTable>tbody>tr>td:first-child,
+.dateTable>tbody>tr>td:last-child{
+    width: 25px;
+}
+.dateTable input{
+    width: 100%;
+}
+
 
 .memo_summary{
     text-align: left;

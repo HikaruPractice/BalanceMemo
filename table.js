@@ -154,7 +154,7 @@ function tableContent() {
         <table class="editTable" >
             <tr id="ts${i}-date_edit" class="dateRow edit">
                 <td>
-                    <table id="ts${i}_Date" class="inputTable" style="table-layout:auto;"><tr>
+                    <table id="ts${i}_Date" class="dateTable"><tr>
                         <td><span onclick="nextDate('ts${i}_Date',true)" class="fas fa-chevron-circle-left nextButton"></span></td>
                         <td>
                             <table class="inputTable"><tr><td>                
