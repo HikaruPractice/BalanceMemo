@@ -82,6 +82,11 @@
     border-color: green;
     background: aquamarine; /* ボタンの背景色 */
 }
+
+.editButton:disabled{
+    background: lightgray;
+}
+
 .editButton::after{
     position: absolute;
     content: '';
@@ -111,4 +116,65 @@
 }
 .charge:checked ~ .chargeLabel::after{
     content: '入金';
+}
+
+.removeLock{
+    display: none;
+}
+
+.removeLockButton{
+    float: right;
+    width: 100px;
+    color: white;
+    background-color: red;
+}
+.removeLockButton::after{
+    content: '削除有効化';
+}
+.removeLock:checked ~ .removeLockButton{
+    background-color: purple;
+}
+.removeLock:checked ~ .removeLockButton::after{
+    content: '削除ロック';
+}
+
+.multiEdit{
+    display: none;
+}
+
+.multiEditButton{
+    float: left;
+    width: 80px;
+    color:black;
+    background-color: aquamarine;
+}
+.multiEditButton::after{
+    content: '複数編集';
+}
+.multiEdit:checked ~ .multiEditButton{
+    background-color: lightpink    ;
+}
+.multiEdit:checked ~ .multiEditButton::after{
+    content: '通常表示';
+}
+
+.addButton{
+    float: right;
+    box-sizing: content-box;
+}
+
+.saveButton{
+    width: fit-content;
+    box-sizing: content-box;
+    background-color: navajowhite;
+}
+.addFileButton{
+    float: right;
+    width: 110px;
+    box-sizing: content-box;
+    background-color: navajowhite;
+}
+
+.selectButton{
+    width: 110px;
 }

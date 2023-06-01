@@ -55,6 +55,10 @@ input{
     box-sizing: border-box;
 }
 
+input[type="file"]{
+    display: none;
+}
+
 .inputBox{
     width: 100%;
 }
@@ -196,4 +200,28 @@ th{
 }
 .amount{
     width: 70px;
+}
+
+.fileTable{
+    table-layout: fixed;
+    border: none;
+}
+
+.fileTable tr,.fileTable td{
+    border: none;
+}
+
+.fileTable td:nth-child(1){
+    width: 115px;
+}
+.fileTable td:nth-child(2){
+    text-align: left;
+}
+.fileTable td:nth-child(3){
+    width: 125px;
+}
+
+
+#filename{
+    width: 100%;
 }

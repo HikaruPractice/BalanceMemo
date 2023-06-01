@@ -35,12 +35,12 @@
                 <!-- 口座一覧表　スクリプトで表生成 -->
                 <!-- tableAccounts() -->
             </table>
-            <label><input id="removePermissionCard" name="removePermissionCard" type="checkbox"
-                    onclick="removeEnableCard()">削除有効</label>
             <table class="accountList_removed accountLists">
                 <!-- 口座一覧(削除済)表　スクリプトで表生成 -->
                 <!-- tableAccounts() -->
             </table>
+            <input class="removeLock" id="removePermissionCard" name="removePermissionCard" type="checkbox" onclick="removeEnableCard()">
+            <label class="removeLockButton normalButton" for="removePermissionCard"></label>
             <table class="addForm">
                 <caption>新規追加</caption>
                 <tr>
@@ -135,10 +135,23 @@
                     </td>
                 </tr>
             </table>
-            <button onclick="createCard()">追加</button>
-            <br>
-            <input id="inputFile" type="file"><br>
-            <button onclick="inputFile()">選択ファイルから追加</button>
+            <button onclick="createCard()" class="normalButton addButton">追加</button>
+            <table class="fileTable">
+                <tr>
+                    <td >
+                        <label for="inputFile" class="normalButton selectButton">ファイル選択</label>
+                        <input id="inputFile" type="file" onchange="displayFilename()"><br>
+                    </td>
+                    <td>
+                        <span id="filename"></span>
+                    </td>
+                    <td>
+                        <button onclick="inputFile()" class="normalButton addFileButton">ファイルから追加</button>
+                    </td>
+                </tr>
+            </table>
+
+
             <br>
             <br>
             <button onclick="localStorage.clear()">全データ削除</button>
@@ -238,18 +251,19 @@
                             </td>
                         </tr>
                     </table>
-                    <button onclick="addTransaction()" style="float: right;">追加</button>
+                    <button onclick="addTransaction()" class="normalButton addButton">追加</button>
                 </div>
                 <div id="statement">
-                    <label><input id="removePermissionTransaction" name="removePermissionTransaction" type="checkbox"
-                            onclick="removeEnableTransaction()">削除有効</label>
                     <table class="transaction">
                         <!-- 取引一覧表　スクリプトで表生成 -->
                     </table>
-                    <label><input type="checkbox" id="multiEditMode" onclick="multiEditMode()">複数編集モード</label>
-                    <button id="multiEditSave" style="display: none;" onclick="multiEditTransaction()">保存</button>
-                    <br>
-                    <button onclick="outputFile()">ファイルに保存</button>
+                    <input class="multiEdit" id="multiEditMode" name="multiEditMode" type="checkbox" onclick="multiEditMode()">
+                    <label class="multiEditButton normalButton" for="multiEditMode"></label>
+                    <button id="multiEditSave" class="normalButton multiSaveButton" style="display: none;" onclick="multiEditTransaction()">保存</button>
+                    <input class="removeLock" id="removePermissionTransaction" name="removePermissionTransaction" type="checkbox" onclick="removeEnableTransaction()">
+                    <label id="removePermissionTransactionButton" class="removeLockButton normalButton" for="removePermissionTransaction"></label>
+                    <br><br>
+                    <button onclick="outputFile()" class="normalButton saveButton">ファイルに保存</button>
                 </div>
             </div>    
         </div>
@@ -257,13 +271,11 @@
             <p>口座を選択してください</p>
         </div>
     </div>
-    <div style="display: block;">
-        日付入力フォーム<br>
+    <div style="display: none;">
 
         エンターで次<br>
+        デバッグ動作確認
 
-
-        ボタンデザイン
 </div>
 </body>
 

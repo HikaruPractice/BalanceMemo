@@ -246,34 +246,35 @@ function multiEditMode(){
     var len = card.getTransactions().length;
     if (mode){
         document.getElementById('multiEditSave').style.display="";
+        document.getElementById('removePermissionTransactionButton').style.display="none";
         for(i=0;i<len;i++){
-            document.getElementById('removePermissionTransaction').disabled=true;
-            for(i=0;i<len;i++){
-                if(document.getElementById(`ts${i}-date`)!==null){
-                    document.getElementById(`ts${i}-date`).style.display="none";
-                }
-                document.getElementById(`ts${i}`).style.display="none";
-                document.getElementById(`ts${i}-date_edit`).style.display="";
-                document.getElementById(`ts${i}_edit`).style.display="";
+            if(document.getElementById(`ts${i}-date`)!==null){
+                document.getElementById(`ts${i}-date`).style.display="none";
             }
+            document.getElementById(`ts${i}`).style.display="none";
+            document.getElementById(`ts${i}-date_edit`).style.display="";
+            document.getElementById(`ts${i}_edit`).style.display="";
             document.getElementsByClassName('editTransaction')[len-i-1].disabled=true;
         }
     }else{        
         document.getElementById('multiEditSave').style.display="none";
+        document.getElementById('removePermissionTransactionButton').style.display="";
         for(i=0;i<len;i++){
-            document.getElementById('removePermissionTransaction').disabled=false;
-            for(i=0;i<len;i++){
-                if(document.getElementById(`ts${i}-date`)!==null){
-                    document.getElementById(`ts${i}-date`).style.display="";
-                }
-                document.getElementById(`ts${i}`).style.display="";
-                document.getElementById(`ts${i}-date_edit`).style.display="none";
-                document.getElementById(`ts${i}_edit`).style.display="none";
+            if(document.getElementById(`ts${i}-date`)!==null){
+                document.getElementById(`ts${i}-date`).style.display="";
             }
+            document.getElementById(`ts${i}`).style.display="";
+            document.getElementById(`ts${i}-date_edit`).style.display="none";
+            document.getElementById(`ts${i}_edit`).style.display="none";
             document.getElementsByClassName('editTransaction')[len-i-1].disabled=false;
         }
     }
 
+
+}
+
+function displayFilename(){
+    document.getElementById('filename').textContent=document.getElementById('inputFile').files[0].name;
 }
 
 function numberToASC(string) {
