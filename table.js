@@ -178,12 +178,14 @@ function tableContent() {
                             </td></tr></table>
                         </td>
                         <td><span onclick="nextDate('ts${i}_Date',false)" class="fas fa-chevron-circle-right nextButton"></span></td>
-                    </table></tr>
+                    </tr><tr class="editDateError">
+                        <td colspan="5">無効な日付です</td>
+                        </tr></table>
                 </td>
             </tr>
             <tr class="edit">
                 <td class="memo_summary">
-                    <table style="table-layout:auto;">
+                    <table style="table-layout:auto;"><tr>
                         <td>
                             <input name="summary" class="inputBox summary" value="${card.getTransaction(i).getSummary()}">
                         </td>
@@ -191,7 +193,9 @@ function tableContent() {
                             <input id="charge_${i}" class="charge" type="checkbox" ${card.getTransaction(i).getAmount() > 0 ? "checked" : ""}><label for="charge_${i}" class="normalButton chargeLabel"></label>
                             <input name="amount" class="amount" value="${Math.abs(card.getTransaction(i).getAmount())}"> 円
                         </td>
-                    </table>
+                        </tr><tr class="editAmountError">
+                            <td colspan="2">数値を入れてください</td>
+                    </tr></table>
                 </td>
             </tr>
         </table>

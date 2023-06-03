@@ -150,11 +150,14 @@
                     </td>
                 </tr>
             </table>
-
-
             <br>
             <br>
-            <button onclick="localStorage.clear()">全データ削除</button>
+            <button onclick="outputAll()">バックアップ保存</button>
+            <input id="inputAll" type="file" style="display: initial;"><br>
+            <button onclick="inputAll()">バックアップ取込(上書き)</button>
+            <br>
+            <br>
+            <button onclick="allClear()">全データ削除</button>
         </div>
         <div id="contentWrapper">
             <div id="content" style="display: none;">
@@ -259,7 +262,7 @@
                     </table>
                     <input class="multiEdit" id="multiEditMode" name="multiEditMode" type="checkbox" onclick="multiEditMode()">
                     <label class="multiEditButton normalButton" for="multiEditMode"></label>
-                    <button id="multiEditSave" class="normalButton multiSaveButton" style="display: none;" onclick="multiEditTransaction()">保存</button>
+                    <button id="multiEditSave" class="normalButton multiSaveButton" onclick="multiEditTransaction()">保存</button>
                     <input class="removeLock" id="removePermissionTransaction" name="removePermissionTransaction" type="checkbox" onclick="removeEnableTransaction()">
                     <label id="removePermissionTransactionButton" class="removeLockButton normalButton" for="removePermissionTransaction"></label>
                     <br><br>

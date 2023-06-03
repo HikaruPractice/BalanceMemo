@@ -58,8 +58,10 @@ function createCard(){
         var month = document.getElementsByName('newCardmonth')[0].value;
         var day = document.getElementsByName('newCardday')[0].value;
         if (!checkDateFormat(year,month,day)){
-            document.getElementById('newCardDayError').style.display = 'table-row';
+            document.getElementById('newCardDayError').style.display = '';
             return;
+        }else{
+            document.getElementById('newCardDayError').style.display = 'none';
         }
         var initialTransactions = [
             [year,month,day,Number(initialBalance),'初期残高']
@@ -130,19 +132,23 @@ function addTransaction() {
     var month = document.getElementsByName('month')[0].value;
     var day = document.getElementsByName('day')[0].value;
     if (!checkDateFormat(year,month,day)){
-        document.getElementById('dayError').style.display = 'table-row';
+        document.getElementById('dayError').style.display = '';
         return;
+    }else{
+        document.getElementById('dayError').style.display = 'none';
     }
     var amount = document.getElementsByName('amount')[0].value;
     if (amount === ""){
-        document.getElementById('amountError').style.display = 'table-row';
+        document.getElementById('amountError').style.display = '';
         return;
     }
     var charge = document.getElementsByName('charge')[0].checked;
-    amount = Number(numberToASC(amount)) * (charge?1:-1);
+    amount = (charge?1:-1)*Number(numberToASC(amount));
     if (amount === NaN){
-        document.getElementById('amountError').style.display = 'table-row';
+        document.getElementById('amountError').style.display = '';
         return;
+    }else{
+        document.getElementById('amountError').style.display = 'none';
     }
     var summary = document.getElementsByName('summary')[0].value;
     card.addTransaction([year, month, day], amount, summary);
@@ -164,11 +170,27 @@ function editTransaction(index){
     var day=target2.getElementsByClassName('day')[0].value;
     var amount=0;
     var summary=target.getElementsByClassName('summary')[0].value;
-    
-    var amountAbs=target.getElementsByClassName('amount')[0].value;
-    var charge=target.getElementsByClassName('charge')[0].checked;
-    amount=(charge?1:-1)*amountAbs;
 
+    if(!checkDateFormat(year,month,day)){
+        target2.getElementsByClassName('editDateError')[0].style.display="table-row";
+        return;
+    }else{
+        target2.getElementsByClassName('editDateError')[0].style.display="";
+    }
+
+    var amountAbs=target.getElementsByClassName('amount')[0].value;
+    if(amountAbs===""){
+        target.getElementsByClassName('editAmountError')[0].style.display="table-row";
+        return;
+    }
+    var charge=target.getElementsByClassName('charge')[0].checked;
+    amount=(charge?1:-1)*Number(amountAbs);
+    if(isNaN(amount)){
+        target.getElementsByClassName('editAmountError')[0].style.display="table-row";
+        return;
+    }else{
+        target.getElementsByClassName('editAmountError')[0].style.display="";
+    }
     card.editTransaction([year,month,day],amount,summary,index);
     saveToLocalStrorage();
 }
@@ -188,25 +210,46 @@ function multiEditTransaction(){
 
     var len=card.getTransactions().length;
 
-    for (i=0;i<len;i++){    
+    let err=false;
+
+    for (let i=0;i<len;i++){    
         target = document.getElementById(`ts${i}_edit`);
         year=target.getElementsByClassName('year')[0].value;
         month=target.getElementsByClassName('month')[0].value;
         day=target.getElementsByClassName('day')[0].value;
-        summary=target.getElementsByClassName('summary')[0].value;
-        
+        if(!checkDateFormat(year,month,day)){
+            target.getElementsByClassName('editDateError')[0].style.display="table-row";
+            err=true;
+        }else{
+            target.getElementsByClassName('editDateError')[0].style.display="";
+        }
         amountAbs=target.getElementsByClassName('amount')[0].value;
-        charge=target.getElementsByClassName('charge')[0].checked;
-
-        amount=(charge?1:-1)*amountAbs;
-
-        transactionsArray.push([year,month,day,amount,summary])
+        if(amountAbs===""){
+            target.getElementsByClassName('editAmountError')[0].style.display="table-row";
+            err=true;
+        }else{
+            charge=target.getElementsByClassName('charge')[0].checked;
+            amount=(charge?1:-1)*amountAbs;
+            if(isNaN(amount)){
+                target.getElementsByClassName('editAmountError')[0].style.display="table-row";
+                err=true;
+            }else{
+                target.getElementsByClassName('editAmountError')[0].style.display="";
+                summary=target.getElementsByClassName('summary')[0].value;
+            }
+        }
+        transactionsArray.push([year,month,day,amount,summary]);
     }
+    if(err){
+        return;
+    }
+
+    document.getElementById('removePermissionTransactionButton').style.display="";
+
     card.setTransactions(transactionsArray);
     card.sortTransactions();
     document.getElementById('removePermissionTransaction').checked=false;
     document.getElementById('multiEditMode').checked=false;
-    document.getElementById('multiEditSave').style.display="none";
 
     saveToLocalStrorage();
 }
@@ -245,7 +288,6 @@ function multiEditMode(){
     var mode = document.getElementById('multiEditMode').checked;
     var len = card.getTransactions().length;
     if (mode){
-        document.getElementById('multiEditSave').style.display="";
         document.getElementById('removePermissionTransactionButton').style.display="none";
         for(i=0;i<len;i++){
             if(document.getElementById(`ts${i}-date`)!==null){
@@ -257,7 +299,6 @@ function multiEditMode(){
             document.getElementsByClassName('editTransaction')[len-i-1].disabled=true;
         }
     }else{        
-        document.getElementById('multiEditSave').style.display="none";
         document.getElementById('removePermissionTransactionButton').style.display="";
         for(i=0;i<len;i++){
             if(document.getElementById(`ts${i}-date`)!==null){
@@ -269,9 +310,17 @@ function multiEditMode(){
             document.getElementsByClassName('editTransaction')[len-i-1].disabled=false;
         }
     }
-
-
 }
+
+function allClear(){
+    if(window.confirm('このページの全データを削除します。よろしいですか。')){
+        if(window.confirm('本当によろしいですか。(これ以上確認しません。)')){
+            localStorage.clear();
+            document.location.reload();
+        }
+    }
+}
+
 
 function displayFilename(){
     document.getElementById('filename').textContent=document.getElementById('inputFile').files[0].name;
@@ -325,11 +374,11 @@ function numberToASC(string) {
 }
 
 function checkDateFormat(year,month,day){
-    var testDate = new Date(year,month-1,day)
+    var testDate = new Date(year,month-1,day);
     if (isNaN(testDate.getTime())){
         return false;
     }
-    if ( testDate.getFullYear()!==Number(year) ||testDate.getMonth()+1 !== Number(month) || testDate.getDate() !== Number(day)){
+    if ( testDate.getFullYear().toString()!==year ||(testDate.getMonth()+1).toString() !==month || testDate.getDate().toString() !== day){
         return false;
     }
     return true;
@@ -346,8 +395,13 @@ function nextDate(id,b){
     let year=document.getElementById(id).getElementsByClassName('year')[0];
     let month=document.getElementById(id).getElementsByClassName('month')[0];
     let day=document.getElementById(id).getElementsByClassName('day')[0];
-    let date=new Date(year.value,Number(month.value)-1,day.value);
-    date.setDate(date.getDate()+(b?-1:1))
+    let date;
+    if(checkDateFormat(year.value,month.value,day.value)){
+        date=new Date(year.value,Number(month.value)-1,day.value);
+        date.setDate(date.getDate()+(b?-1:1));
+    }else{
+        date=new Date();
+    }
     year.value=date.getFullYear();
     month.value=date.getMonth()+1;
     day.value=date.getDate();

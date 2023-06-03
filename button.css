@@ -178,3 +178,13 @@
 .selectButton{
     width: 110px;
 }
+
+.multiSaveButton{
+    display: none;
+    float: right;
+    border-color: green;
+    background: aquamarine; /* ボタンの背景色 */
+}
+.multiEdit:checked ~ .multiSaveButton{
+    display: initial;
+}

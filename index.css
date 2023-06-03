@@ -225,3 +225,11 @@ th{
 #filename{
     width: 100%;
 }
+
+.editDateError,
+.editAmountError{
+    display: none;
+    text-align: right;
+    color: red;
+}
+

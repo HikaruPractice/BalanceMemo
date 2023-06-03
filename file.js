@@ -53,9 +53,9 @@ function inputFile(){
 }
 
 
-function download_csv(file_name, data){
+function download(file_name, data,type){
     const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
-    const blob = new Blob([bom,data], {type: 'text/csv'});
+    const blob = new Blob([bom,data], {type: type});
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     document.body.appendChild(a);
@@ -64,6 +64,13 @@ function download_csv(file_name, data){
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+}
+
+function download_csv(file_name, data){
+    download(file_name, data,'text/csv');
+}
+function download_txt(file_name, data){
+    download(file_name, data,'text/plain');
 }
 
 function outputFile(){
@@ -94,3 +101,31 @@ function filenameFormat(string){
     return v;
 }
 
+function inputAll(){    
+    if(!window.confirm('現在のデータが全て上書き削除されますがよろしいですか。')){
+        return;
+    }
+var files=document.getElementById('inputAll').files;
+    
+for(file of files){
+    var reader=new FileReader();
+    reader.readAsText(file,'UTF-8');
+    reader.onload=(event)=>{
+        var input=event.target.result;
+        localStorage.setItem('cards', input);
+        document.location.reload();
+    }
+}
+document.getElementById('inputFile').value="";
+    
+}
+
+function outputAll(){
+    var data={
+        cards:cards,
+        selected:selected
+    }
+    var jsonString = JSON.stringify(data);
+    download_txt(filenameFormat('全カード残高'),jsonString);
+
+}
